@@ -1,0 +1,385 @@
+<!--
+PART 1: index.html
+PART 
+2: styles.css   (below inside <style> for single-file delivery)
+PART 3: script.js    (below inside <script>)
+
+Save this whole file as `index.html` to run. If you prefer separate files,
+copy the CSS between the <style> tags into styles.css and the JS between
+<script> into script.js and link them from the HTML.
+-->
+
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Portfolio — Premium Responsive</title>
+  <meta name="description" content="Premium responsive portfolio with animated hero, rotating roles, scroll reveal and contact form">
+
+  <!-- PART 2: styles.css (inlined for single-file) -->
+  <style>
+    :root{
+      --bg1: #0f172a;
+      --bg2: #071133;
+      --accent: linear-gradient(90deg,#ff7a59,#ffbd59,#7afcff);
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.03);
+      --card-radius: 18px;
+      --max-w: 1100px;
+      --gap: 1.25rem;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #e6eef8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(122,252,255,0.06), transparent 6%), linear-gradient(180deg,var(--bg1),var(--bg2));}
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:var(--max-w);margin:0 auto;padding:2rem;}
+
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;position:sticky;top:0;z-index:50;background:linear-gradient(180deg, rgba(7,17,51,0.35), rgba(7,17,51,0.15));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .brand{display:flex;gap:0.75rem;align-items:center;font-weight:700}
+    .logo{width:44px;height:44px;border-radius:12px;background:var(--accent);display:grid;place-items:center;color:#071133;font-weight:800}
+    nav{display:flex;gap:1rem}
+    nav a{padding:0.5rem 0.7rem;border-radius:10px;font-weight:600}
+    nav a:hover{background:var(--glass);}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center;padding:2rem 0}
+    .hero-left{padding:1rem 0}
+    .eyebrow{display:inline-block;background:var(--glass-2);padding:6px 10px;border-radius:999px;font-size:13px;margin-bottom:1rem}
+    h1{font-size: clamp(1.8rem, 4vw, 3rem);margin:0 0 0.6rem;line-height:1.05}
+    .rotating{color:transparent;background-clip:text;-webkit-background-clip:text;background-image:var(--accent);font-weight:800}
+    p.lead{opacity:0.9;max-width:54ch}
+
+    .cta-row{display:flex;gap:0.75rem;margin-top:1.25rem}
+    .btn{padding:0.8rem 1.2rem;border-radius:12px;font-weight:700;cursor:pointer;border:0}
+    .btn-primary{background:var(--accent);color:#071133}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    /* hero-right slideshow */
+    .slideshow{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6);min-height:320px}
+    .slide{position:absolute;inset:0;opacity:0;transform:translateY(20px) scale(0.99);transition:all 700ms cubic-bezier(.16,.84,.49,1)}
+    .slide.active{opacity:1;transform:none}
+    .slide img{width:100%;height:100%;object-fit:cover;display:block}
+    .slide .caption{position:absolute;left:1rem;bottom:1rem;background:linear-gradient(90deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));padding:10px 14px;border-radius:10px;font-weight:700}
+
+    /* sections */
+    section{padding:3rem 0}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1.25rem;border-radius:var(--card-radius);box-shadow:0 6px 20px rgba(2,6,23,0.6);}
+
+    /* skills */
+    .skill{display:flex;flex-direction:column;gap:0.5rem}
+    .skill .bar{height:12px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+    .skill .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff7a59,#7afcff);border-radius:inherit;transition:width 900ms cubic-bezier(.16,.84,.49,1)}
+
+    /* quotes */
+    .quotes{display:grid;gap:1rem}
+    blockquote{margin:0;padding:1rem 1.2rem;border-left:4px solid rgba(122,252,255,0.14);background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);border-radius:12px}
+    blockquote p{margin:0;font-style:italic}
+    .quote-author{margin-top:0.6rem;font-weight:700;font-size:14px}
+
+    /* contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 340px;gap:var(--gap)}
+    form{display:flex;flex-direction:column;gap:0.75rem}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:0.8rem;border-radius:10px;color:inherit;font-weight:600}
+
+    /* footer */
+    footer{padding:2rem 0;text-align:center;opacity:0.85}
+
+    /* small screens */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .contact-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:600px){
+      .grid-3{grid-template-columns:1fr}
+      nav{display:none}
+    }
+
+    /* subtle animations on reveal */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .8s ease,transform .8s ease}
+    .reveal.visible{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <div style="font-size:14px;opacity:0.9">Apu's</div>
+        <div style="font-size:12px;opacity:0.6">Portfolio</div>
+      </div>
+    </div>
+    <nav aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="home" class="hero">
+      <div class="hero-left">
+        <span class="eyebrow reveal"><h2>Hey Welcome</h2></span>
+        <h1 class="reveal">I’m <span id="name">Md. Hayder Bhuyan</span>-<span id="roles" class="rotating">a creative</span></h1>
+        <p class="lead reveal">I create visual identities and digital experiences. I make short animated videos, thumbnails, and UI/UX that help brands speak clearly and beautifully.</p>
+        <div class="cta-row reveal">
+          <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire me</button>
+          <a class="btn btn-ghost" href="#work">My work</a>
+        </div>
+        <div style="margin-top:1rem" class="reveal">
+          <strong>Quick quote:</strong>
+          <blockquote style="margin-top:.5rem">"Design is not just what it looks like — it’s how it delights."<div class="quote-author">— Marcos</div></blockquote>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="slideshow" aria-hidden="false">
+          <div class="slide active">
+            <img src="apu.jpg" alt="Project 1">
+            <div class="caption"></div>
+          </div>
+          <div class="slide">
+            <img src="apu2.jpg" alt="Project 2">
+            <div class="caption"></div>
+          </div>
+          <div class="slide">
+            <img src="FB_IMG_1758549192068.jpg" alt="Project 3">
+            <div class="caption"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal">
+      <div class="card">
+        <h3>About me</h3>
+        <p>pore likhbo</p>
+        <p><strong>Role ideas to show on hero rotation:</strong> Graphics Designer, Digital Marketer, Animator, Thumbnail Specialist, UI/UX Creator</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h3 class="reveal">Skills</h3>
+      <div class="grid-3" style="margin-top:1rem">
+        <div class="card reveal">
+          <h4>Safety rules enforcement</h4>
+          <div class="skill"><div style="display:flex;justify-content:space-between"><span>Excellent</span><span>95%</span></div><div class="bar"><i data-width="90%"></i></div></div>
+         
+        </div>
+
+        <div class="card reveal">
+          <h4>Assembly and production</h4>
+          <div class="skill"><div style="display:flex;justify-content:space-between"><span>Excellent</span><span>90%</span></div><div class="bar"><i data-width="88%"></i></div></div>
+          
+        </div>
+
+        <div class="card reveal">
+          <h4>Materials management</h4>
+          <div class="skill"><div style="display:flex;justify-content:space-between"><span>Very Good</span><span>80%</span></div><div class="bar"><i data-width="78%"></i></div></div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="reveal">
+      <h3>Work History</h3>
+      <div style="margin-top:1rem" class="quotes">
+        <div class="card">
+          <h2>Production Leader</h2>
+          <h3>2020-01 Current</h3>
+          <blockquote>
+            <p>DECATHLON (Desipro Pte Ltd Bangladesh), Dhaka <br>
+              <br>
+              Monitored workers on site during production
+              activities for safety procedures compliance. <br>
+              <br>
+            
+              Ensure HRP, Environment and Quality assessments
+              good level in supplier premises <br>
+              <br>
+              Made sure that products were produced on time
+              and are of good quality. <br>
+              <br>
+              Examined incoming materials and compared to
+              documentation for accuracy and quality. <br>
+              <br>
+              Actively listened to customers claim and support
+              as soon as possible to solve the issues. <br>
+              <br>
+              Implement SOP all the critical points in the
+              welding line <br>
+              <br>
+              Co-build the control plan for the new models
+              routine management <br>
+              <br>
+              Monitoring the factory inventory to stock levels
+              Creating the weekly and monthly quality
+              performance report <br>
+              <br>
+              NQC Management with customer country
+              (Romania, Portugal and Italy) <br>
+              <br>
+              Develop and implement new idea also to
+              promote continuous improvement (CI Mindset) <br>
+              <br>
+              Store and production floor management (FIFO)
+              by regular GEMBA."</p>
+            <div class="quote-author"></div>
+          </blockquote>
+        </div>
+        <div class="card">
+          <h2>Sr.Engineer</h2>
+          <h3>2017-07 To 2019-12</h3>
+          <blockquote>
+            <p>Establish & monitoring QA & Engineering-Final
+              Inspection team <br>
+              <br>
+              Torque inspection in assembly line and control
+              Training Assembly line and FI (Final Inspection)
+              Operators<br>
+              <br>
+              Repairing defective item, Analytical report
+              writing, Defective item controlling<br>
+              <br>
+              KD (Knock Down) reporting and correspondence
+              with Hero India team<br>
+              <br>
+              From Dealer Point Customers warranty issues
+              check and gives feedback as early as possible<br>
+              <br>
+              Zero Defect free vehicles send to PDI (Pre
+              Delivery Inspection)<br>
+              <br>
+              Managing manpower at a time different model
+              production<br>
+              <br>
+              OPDC, Overall pant MIS, Stock Balance & FI
+              report maintain<br>
+              <br>
+              Ensure 5S in the shop floor & TPM.</p>
+            <div class="quote-author"></div>
+          </blockquote>
+          <div class="card">
+            <h2>Apprentice Engineer</h2>
+            <h3>2017-001 To 2017-05</h3>
+            <blockquote>
+              <p>Khulna Power Company Ltd, Khulna<br>
+                <br>
+                18v32 and 18v46 Wartsila generator engine operation<br>
+                <br>
+                Engine maintenance and other utility maintenance</p>
+              <div class="quote-author"></div>
+            </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <h3>Contact</h3>
+      <div class="contact-grid" style="margin-top:1rem">
+        <div class="card">
+          <form id="contactForm">
+            <input required id="name" placeholder="Name">
+            <input required id="email" type="email" placeholder="Email">
+            <textarea required id="message" rows="5" placeholder="Message"></textarea>
+            <button type="submit" class="btn btn-primary">Send message</button>
+          </form>
+        </div>
+        <div class="card">
+          <h4>Get in touch</h4>
+          <p>Email: <strong>hayder.bhuyan@gmail.com</strong></p>
+          <p>Location: Bangladesh</p>
+          <p></p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="reveal">
+      <small>© <span id="year"></span> Mahfuz Ahmad.</small>
+    </footer>
+  </main>
+
+  <!-- PART 3: script.js (inlined for single-file) -->
+  <script>
+    // small utilities
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    // rotate roles with typing effect
+    (function rolesTyping(){
+      const el = document.getElementById('roles');
+      const name = document.getElementById('name').textContent || 'Marcos';
+      const roles = ['Production Leader of','Decathlon Desipro Pte Ltd Dhaka Bangladesh'];
+      let ri=0, ci=0, deleting=false;
+      function tick(){
+        const full = roles[ri];
+        if(!deleting){
+          el.textContent = full.slice(0, ci+1);
+          ci++;
+          if(ci===full.length){deleting=true;setTimeout(tick,1200);return}
+        } else {
+          el.textContent = full.slice(0, ci-1);
+          ci--;
+          if(ci<=0){deleting=false;ri=(ri+1)%roles.length}
+        }
+        setTimeout(tick, deleting?80:90);
+      }
+      tick();
+    })();
+
+    // slideshow
+    (function slideshow(){
+      const slides = Array.from($$('.slide'));
+      let idx=0;
+      setInterval(()=>{
+        slides[idx].classList.remove('active');
+        idx=(idx+1)%slides.length;
+        slides[idx].classList.add('active');
+      },3500);
+    })();
+
+    // reveal on scroll
+    (function revealOnScroll(){
+      const opts = {threshold:0.12};
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting) e.target.classList.add('visible');
+        });
+      },opts);
+      document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    })();
+
+    // skill bars animate width
+    (function skillBars(){
+      const bars = document.querySelectorAll('.bar > i');
+      bars.forEach(b=>{const w = b.getAttribute('data-width')||'60%';setTimeout(()=>{b.style.width = w},400)});
+    })();
+
+    // contact form simple handling (no backend) - shows success message
+    (function contactForm(){
+      const form = document.getElementById('contactForm');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = form.name?.value || form.querySelector('#name').value;
+        alert('Thanks '+(name||'there')+"! This demo form doesn't actually send — connect your backend or email endpoint.");
+        form.reset();
+      });
+    })();
+
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // small accessibility: allow keyboard nav to skip slideshow
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape') window.scrollTo({top:0,behavior:'smooth'});
+    });
+  </script>
+</body>
+</html>
